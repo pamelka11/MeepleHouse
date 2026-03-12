@@ -1,0 +1,81 @@
+﻿<Window x:Class="MeepleHouse.EditProfileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Редактирование профиля"
+        Height="577"
+        Width="420"
+        WindowStartupLocation="CenterScreen"
+        Background="#F2F2F2">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="#4CAF50">
+
+            <StackPanel VerticalAlignment="Center">
+
+                <TextBlock Text="Meeple House"
+FontSize="26"
+FontWeight="Bold"
+Foreground="White"
+HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Кружок настольных игр"
+FontSize="12"
+Foreground="White"
+HorizontalAlignment="Center"/>
+
+            </StackPanel>
+
+        </Grid>
+
+        <Border Grid.Row="1"
+Background="White"
+Margin="40"
+CornerRadius="10"
+Padding="30">
+
+            <StackPanel>
+
+                <TextBlock Text="Редактирование профиля"
+FontSize="22"
+FontWeight="Bold"
+HorizontalAlignment="Center"
+Margin="0 0 0 20"/>
+
+                <TextBlock Text="ФИО"/>
+                <TextBox x:Name="NameBox"
+Height="30"
+Margin="0 5 0 15"/>
+
+                <TextBlock Text="Email"/>
+                <TextBox x:Name="EmailBox"
+Height="30"
+Margin="0 5 0 15"/>
+
+                <TextBlock Text="Телефон"/>
+                <TextBox x:Name="PhoneBox"
+Height="30"
+Margin="0 5 0 25"/>
+
+                <Button Content="Сохранить"
+Height="35"
+Background="#4CAF50"
+Foreground="White"
+Click="Save_Click"/>
+
+                <Button Content="Отмена"
+Height="35"
+Margin="0 10 0 0"
+Click="Cancel_Click"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+</Window>
