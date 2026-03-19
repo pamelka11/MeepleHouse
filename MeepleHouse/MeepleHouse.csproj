@@ -109,6 +109,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="MyRegistrationsWindow.xaml.cs">
+      <DependentUpon>MyRegistrationsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ProfileWindow.xaml.cs">
       <DependentUpon>ProfileWindow.xaml</DependentUpon>
     </Compile>
@@ -190,6 +193,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MyRegistrationsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ProfileWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -244,6 +251,26 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Games\Image\7wonders.png" />
+    <Resource Include="Games\Image\carcassonne.png" />
+    <Resource Include="Games\Image\catan.png" />
+    <Resource Include="Games\Image\dixit.png" />
+    <Resource Include="Games\Image\imaginarium.png" />
+    <Resource Include="Games\Image\mafia.png" />
+    <Resource Include="Games\Image\munchkin.png" />
+    <Resource Include="Games\Image\pandemic.png" />
+    <Resource Include="Games\Image\ticket_to_ride.png" />
+    <Resource Include="Games\Image\uno.png" />
+    <Resource Include="ButtonImage\7wonders.png" />
+    <Resource Include="ButtonImage\carcason.png" />
+    <Resource Include="ButtonImage\catan.png" />
+    <Resource Include="ButtonImage\dixit.png" />
+    <Resource Include="ButtonImage\imaginarium.png" />
+    <Resource Include="ButtonImage\mafia.png" />
+    <Resource Include="ButtonImage\Munchcin.png" />
+    <Resource Include="ButtonImage\pandemic.png" />
+    <Resource Include="ButtonImage\ticket.png" />
+    <Resource Include="ButtonImage\uno.png" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
@@ -258,5 +285,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

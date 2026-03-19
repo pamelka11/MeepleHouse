@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Профиль"
-        Height="550"
+        Height="617"
         Width="420"
         WindowStartupLocation="CenterScreen"
         Background="#F2F2F2">
@@ -69,18 +69,23 @@ Margin="0 5 0 15"/>
                 <TextBlock x:Name="PhoneText"
 FontSize="16"
 Margin="0 5 0 25"/>
+                <Button Content="Мои записи"
+            Width="200"
+            Height="40"
+            Click="MyRegistrations_Click"/>
 
-
+                <!-- Остальные кнопки -->
                 <Button Content="Редактировать профиль"
-Height="35"
-Background="#4CAF50"
-Foreground="White"
-Click="Edit_Click"/>
+            Width="200"
+            Height="40"
+            Margin="0 10 0 0"
+            Click="Edit_Click"/>
 
                 <Button Content="Выйти"
-Height="35"
-Margin="0 10 0 0"
-Click="Logout_Click"/>
+            Width="200"
+            Height="40"
+            Margin="0 10 0 0"
+            Click="Logout_Click"/>
 
             </StackPanel>
 

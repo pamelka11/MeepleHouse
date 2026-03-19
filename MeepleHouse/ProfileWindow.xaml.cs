@@ -45,5 +45,14 @@ namespace MeepleHouse
 
             this.Close();
         }
+
+        private void MyRegistrations_Click(object sender, RoutedEventArgs e)
+        {
+            MyRegistrationsWindow window = new MyRegistrationsWindow();
+            window.Show();
+
+            this.Close();
+        }
     }
+
 }

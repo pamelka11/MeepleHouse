@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 
 namespace MeepleHouse.Games
@@ -7,12 +8,13 @@ namespace MeepleHouse.Games
     {
         MeepleHouseDBEntities db = new MeepleHouseDBEntities();
 
-        int gameId = 2;
+        int gameId = 3; // ID Катана
 
         public CatanWindow()
         {
             InitializeComponent();
             LoadPlayers();
+            LoadDate();
         }
 
         void LoadPlayers()
@@ -27,11 +29,21 @@ namespace MeepleHouse.Games
             PlayersText.Text = "Записано: " + registered + " из " + maxPlayers;
         }
 
-        private void Join_Click(object sender, RoutedEventArgs e)
+        private void Register_Click(object sender, RoutedEventArgs e)
         {
             if (Session.CurrentUser == null)
             {
-                MessageBox.Show("Чтобы записаться, необходимо авторизоваться");
+                MessageBox.Show("Вы не авторизованы");
+                return;
+            }
+
+            var existing = db.Registrations.FirstOrDefault(r =>
+                r.GameId == gameId &&
+                r.UserId == Session.CurrentUser.Id);
+
+            if (existing != null)
+            {
+                MessageBox.Show("Вы уже записаны на этот кружок");
                 return;
             }
 
@@ -48,28 +60,24 @@ namespace MeepleHouse.Games
                 return;
             }
 
-            var exist = db.Registrations.FirstOrDefault(r =>
-                r.UserId == Session.CurrentUser.Id &&
-                r.GameId == gameId);
-
-            if (exist != null)
-            {
-                MessageBox.Show("Вы уже записаны");
-                return;
-            }
-
             Registrations reg = new Registrations();
-
-            reg.UserId = Session.CurrentUser.Id;
             reg.GameId = gameId;
-            reg.RegistrationDate = System.DateTime.Now;
+            reg.UserId = Session.CurrentUser.Id;
 
             db.Registrations.Add(reg);
             db.SaveChanges();
 
-            MessageBox.Show("Вы записались на игру");
+            MessageBox.Show("Вы успешно записались");
 
             LoadPlayers();
         }
+        void LoadDate()
+        {
+            DateTime baseTime = new DateTime(2026, 7, 1, 10, 25, 0);
+
+            DateTime gameTime = baseTime.AddHours(gameId - 1);
+
+            DateText.Text = "Ближайшая игра: " + gameTime.ToString("d MMMM HH:mm");
+        }
     }
-}
+    }
