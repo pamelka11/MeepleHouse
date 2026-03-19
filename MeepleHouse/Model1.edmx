@@ -4,26 +4,25 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище MeepleHouseDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище MeepleHouseDB2Model" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BoardGames">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
           <Property Name="MinPlayers" Type="int" />
           <Property Name="MaxPlayers" Type="int" />
-          <Property Name="ImagePath" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Registrations">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="GameId" Type="int" />
-          <Property Name="RegistrationDate" Type="datetime" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="GameId" Type="int" Nullable="false" />
+          <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -40,14 +39,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
           <Property Name="Phone" Type="nvarchar" MaxLength="20" />
         </EntityType>
-        <Association Name="FK__Registrat__GameI__3C69FB99">
-          <End Role="BoardGames" Type="Self.BoardGames" Multiplicity="0..1" />
+        <Association Name="FK__Registrat__GameI__628FA481">
+          <End Role="BoardGames" Type="Self.BoardGames" Multiplicity="1" />
           <End Role="Registrations" Type="Self.Registrations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BoardGames">
@@ -58,8 +57,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Registrat__UserI__3B75D760">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+        <Association Name="FK__Registrat__UserI__619B8048">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Registrations" Type="Self.Registrations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -70,16 +69,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Хранилище MeepleHouseDBModelContainer">
+        <EntityContainer Name="Хранилище MeepleHouseDB2ModelContainer">
           <EntitySet Name="BoardGames" EntityType="Self.BoardGames" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Registrations" EntityType="Self.Registrations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Registrat__GameI__3C69FB99" Association="Self.FK__Registrat__GameI__3C69FB99">
+          <AssociationSet Name="FK__Registrat__GameI__628FA481" Association="Self.FK__Registrat__GameI__628FA481">
             <End Role="BoardGames" EntitySet="BoardGames" />
             <End Role="Registrations" EntitySet="Registrations" />
           </AssociationSet>
-          <AssociationSet Name="FK__Registrat__UserI__3B75D760" Association="Self.FK__Registrat__UserI__3B75D760">
+          <AssociationSet Name="FK__Registrat__UserI__619B8048" Association="Self.FK__Registrat__UserI__619B8048">
             <End Role="Users" EntitySet="Users" />
             <End Role="Registrations" EntitySet="Registrations" />
           </AssociationSet>
@@ -88,29 +87,28 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MeepleHouseDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="MeepleHouseDB2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="BoardGames">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="MinPlayers" Type="Int32" />
           <Property Name="MaxPlayers" Type="Int32" />
-          <Property Name="ImagePath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__GameI__3C69FB99" FromRole="BoardGames" ToRole="Registrations" />
+          <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__GameI__628FA481" FromRole="BoardGames" ToRole="Registrations" />
         </EntityType>
         <EntityType Name="Registrations">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="GameId" Type="Int32" />
-          <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="BoardGames" Relationship="Self.FK__Registrat__GameI__3C69FB99" FromRole="Registrations" ToRole="BoardGames" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Registrat__UserI__3B75D760" FromRole="Registrations" ToRole="Users" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="GameId" Type="Int32" Nullable="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="BoardGames" Relationship="Self.FK__Registrat__GameI__628FA481" FromRole="Registrations" ToRole="BoardGames" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Registrat__UserI__619B8048" FromRole="Registrations" ToRole="Users" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -127,15 +125,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__UserI__3B75D760" FromRole="Users" ToRole="Registrations" />
+          <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__UserI__619B8048" FromRole="Users" ToRole="Registrations" />
         </EntityType>
-        <Association Name="FK__Registrat__GameI__3C69FB99">
-          <End Role="BoardGames" Type="Self.BoardGames" Multiplicity="0..1" />
+        <Association Name="FK__Registrat__GameI__628FA481">
+          <End Role="BoardGames" Type="Self.BoardGames" Multiplicity="1" />
           <End Role="Registrations" Type="Self.Registrations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BoardGames">
@@ -146,8 +144,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Registrat__UserI__3B75D760">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+        <Association Name="FK__Registrat__UserI__619B8048">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Registrations" Type="Self.Registrations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -158,16 +156,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MeepleHouseDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MeepleHouseDB2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BoardGames" EntityType="Self.BoardGames" />
           <EntitySet Name="Registrations" EntityType="Self.Registrations" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Users" EntityType="Self.Users" />
-          <AssociationSet Name="FK__Registrat__GameI__3C69FB99" Association="Self.FK__Registrat__GameI__3C69FB99">
+          <AssociationSet Name="FK__Registrat__GameI__628FA481" Association="Self.FK__Registrat__GameI__628FA481">
             <End Role="BoardGames" EntitySet="BoardGames" />
             <End Role="Registrations" EntitySet="Registrations" />
           </AssociationSet>
-          <AssociationSet Name="FK__Registrat__UserI__3B75D760" Association="Self.FK__Registrat__UserI__3B75D760">
+          <AssociationSet Name="FK__Registrat__UserI__619B8048" Association="Self.FK__Registrat__UserI__619B8048">
             <End Role="Users" EntitySet="Users" />
             <End Role="Registrations" EntitySet="Registrations" />
           </AssociationSet>
@@ -177,21 +175,20 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище MeepleHouseDBModelContainer" CdmEntityContainer="MeepleHouseDBEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MeepleHouseDB2ModelContainer" CdmEntityContainer="MeepleHouseDB2Entities">
           <EntitySetMapping Name="BoardGames">
-            <EntityTypeMapping TypeName="MeepleHouseDBModel.BoardGames">
+            <EntityTypeMapping TypeName="MeepleHouseDB2Model.BoardGames">
               <MappingFragment StoreEntitySet="BoardGames">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="MinPlayers" ColumnName="MinPlayers" />
                 <ScalarProperty Name="MaxPlayers" ColumnName="MaxPlayers" />
-                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Registrations">
-            <EntityTypeMapping TypeName="MeepleHouseDBModel.Registrations">
+            <EntityTypeMapping TypeName="MeepleHouseDB2Model.Registrations">
               <MappingFragment StoreEntitySet="Registrations">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -201,7 +198,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="MeepleHouseDBModel.sysdiagrams">
+            <EntityTypeMapping TypeName="MeepleHouseDB2Model.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -212,7 +209,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="MeepleHouseDBModel.Users">
+            <EntityTypeMapping TypeName="MeepleHouseDB2Model.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Username" ColumnName="Username" />

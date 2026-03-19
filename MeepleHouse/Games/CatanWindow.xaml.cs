@@ -1,18 +1,20 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 
 namespace MeepleHouse.Games
 {
     public partial class CatanWindow : Window
     {
-        MeepleHouseDBEntities db = new MeepleHouseDBEntities();
+        MeepleHouseDB2Entities db = new MeepleHouseDB2Entities();
 
-        int gameId = 2;
+        int gameId = 3; // ID Катана
 
         public CatanWindow()
         {
             InitializeComponent();
             LoadPlayers();
+            LoadDate();
         }
 
         void LoadPlayers()
@@ -27,49 +29,71 @@ namespace MeepleHouse.Games
             PlayersText.Text = "Записано: " + registered + " из " + maxPlayers;
         }
 
-        private void Join_Click(object sender, RoutedEventArgs e)
+        private void Register_Click(object sender, RoutedEventArgs e)
         {
+            // проверка авторизации
             if (Session.CurrentUser == null)
             {
-                MessageBox.Show("Чтобы записаться, необходимо авторизоваться");
+                MessageBox.Show("Вы не авторизованы");
                 return;
             }
 
+            // проверка: уже записан
+            bool exists = db.Registrations.Any(r =>
+                r.GameId == gameId &&
+                r.UserId == Session.CurrentUser.Id);
+
+            if (exists)
+            {
+                MessageBox.Show("Вы уже записаны на этот кружок");
+                return;
+            }
+
+            // сколько уже записано
             int registered = db.Registrations.Count(r => r.GameId == gameId);
 
+            // максимум игроков
             int maxPlayers = db.BoardGames
                 .Where(g => g.Id == gameId)
                 .Select(g => g.MaxPlayers)
                 .FirstOrDefault() ?? 0;
 
+            // проверка заполненности
             if (registered >= maxPlayers)
             {
                 MessageBox.Show("Группа уже заполнена");
                 return;
             }
 
-            var exist = db.Registrations.FirstOrDefault(r =>
-                r.UserId == Session.CurrentUser.Id &&
-                r.GameId == gameId);
-
-            if (exist != null)
+            // создание записи
+            Registrations reg = new Registrations
             {
-                MessageBox.Show("Вы уже записаны");
-                return;
+                GameId = gameId,
+                UserId = Session.CurrentUser.Id,
+                RegistrationDate = DateTime.Now
+            };
+
+            try
+            {
+                db.Registrations.Add(reg);   // 🔥 ВАЖНО
+                db.SaveChanges();            // 🔥 ВАЖНО
+
+                MessageBox.Show("Вы успешно записались");
+
+                LoadPlayers(); // обновление
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка: " + ex.InnerException?.Message);
+            }
+        }
+        void LoadDate()
+        {
+            DateTime baseTime = new DateTime(2026, 7, 1, 10, 25, 0);
 
-            Registrations reg = new Registrations();
+            DateTime gameTime = baseTime.AddHours(gameId - 1);
 
-            reg.UserId = Session.CurrentUser.Id;
-            reg.GameId = gameId;
-            reg.RegistrationDate = System.DateTime.Now;
-
-            db.Registrations.Add(reg);
-            db.SaveChanges();
-
-            MessageBox.Show("Вы записались на игру");
-
-            LoadPlayers();
+            DateText.Text = "Ближайшая игра: " + gameTime.ToString("d MMMM HH:mm");
         }
     }
-}
+    }

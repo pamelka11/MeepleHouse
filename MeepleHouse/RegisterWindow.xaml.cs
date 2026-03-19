@@ -6,7 +6,7 @@ namespace MeepleHouse
 {
     public partial class RegisterWindow : Window
     {
-        MeepleHouseDBEntities db = new MeepleHouseDBEntities();
+        MeepleHouseDB2Entities db = new MeepleHouseDB2Entities();
 
         public RegisterWindow()
         {

@@ -5,7 +5,7 @@ namespace MeepleHouse
 {
     public partial class EditProfileWindow : Window
     {
-        MeepleHouseDBEntities db = new MeepleHouseDBEntities();
+        MeepleHouseDB2Entities db = new MeepleHouseDB2Entities();
 
         public EditProfileWindow()
         {

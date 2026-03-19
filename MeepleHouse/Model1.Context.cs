@@ -13,10 +13,10 @@ namespace MeepleHouse
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MeepleHouseDBEntities : DbContext
+    public partial class MeepleHouseDB2Entities : DbContext
     {
-        public MeepleHouseDBEntities()
-            : base("name=MeepleHouseDBEntities")
+        public MeepleHouseDB2Entities()
+            : base("name=MeepleHouseDB2Entities")
         {
         }
     

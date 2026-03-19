@@ -24,7 +24,6 @@ namespace MeepleHouse
         public string Description { get; set; }
         public Nullable<int> MinPlayers { get; set; }
         public Nullable<int> MaxPlayers { get; set; }
-        public string ImagePath { get; set; }
     
         public virtual ICollection<Registrations> Registrations { get; set; }
     }

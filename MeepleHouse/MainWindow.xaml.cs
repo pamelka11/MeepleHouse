@@ -26,7 +26,7 @@ namespace MeepleHouse
             new CatanWindow().ShowDialog();
         }
 
-        private void TicketToRide_Click(object sender, RoutedEventArgs e)
+        private void Ticket_Click(object sender, RoutedEventArgs e)
         {
             new TicketToRideWindow().ShowDialog();
         }
@@ -51,7 +51,7 @@ namespace MeepleHouse
             new PandemicWindow().ShowDialog();
         }
 
-        private void SevenWonders_Click(object sender, RoutedEventArgs e)
+        private void Seven_Click(object sender, RoutedEventArgs e)
         {
             new SevenWondersWindow().ShowDialog();
         }
@@ -65,5 +65,7 @@ namespace MeepleHouse
         {
             new MafiaWindow().ShowDialog();
         }
+
+        
     }
 }

@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="444e81f69bf94fdfa5b13ef8256d8852" Name="Diagram1">
-        <EntityTypeShape EntityType="MeepleHouseDBModel.BoardGames" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeepleHouseDBModel.Registrations" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeepleHouseDBModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeepleHouseDBModel.Users" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <AssociationConnector Association="MeepleHouseDBModel.FK__Registrat__GameI__3C69FB99" ManuallyRouted="false" />
-        <AssociationConnector Association="MeepleHouseDBModel.FK__Registrat__UserI__3B75D760" ManuallyRouted="false" />
+      <Diagram DiagramId="b87e0be2cf1445828699703e91435db8" Name="Diagram1">
+        <EntityTypeShape EntityType="MeepleHouseDB2Model.BoardGames" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeepleHouseDB2Model.Registrations" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeepleHouseDB2Model.sysdiagrams" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeepleHouseDB2Model.Users" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK__Registrat__GameI__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK__Registrat__UserI__619B8048" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
