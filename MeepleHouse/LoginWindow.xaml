@@ -2,79 +2,208 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Авторизация"
-        Height="547"
+        Height="718"
         Width="420"
         WindowStartupLocation="CenterScreen"
-        Background="#F2F2F2">
+        Background="#F7F9F8"
+        FontFamily="Segoe UI">
 
-    <Grid Margin="0,0,0,-47">
+    <Window.Resources>
 
+        <Style x:Key="MainButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="Background" Value="#1B6B32"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="23">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="12"
+                                                  ShadowDepth="3"
+                                                  Opacity="0.18"/>
+                            </Border.Effect>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SecondButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="Background" Value="#ECEFF1"/>
+            <Setter Property="Foreground" Value="#455A64"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="23">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="12 0"/>
+            <Setter Property="Background" Value="#F8FAFB"/>
+            <Setter Property="BorderBrush" Value="#D7DEE3"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="12">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="2"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernPasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="12 0"/>
+            <Setter Property="Background" Value="#F8FAFB"/>
+            <Setter Property="BorderBrush" Value="#D7DEE3"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="12">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="2"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Margin="0,0,0,98">
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Шапка -->
-        <Grid Background="#4CAF50">
+        <!-- ШАПКА -->
+        <Grid Grid.Row="0">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#0E3B22" Offset="0"/>
+                    <GradientStop Color="#0F6B2C" Offset="0.6"/>
+                    <GradientStop Color="#167A35" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
 
-            <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="🎲  🔐  🧩"
+                       FontSize="42"
+                       Opacity="0.08"
+                       Foreground="White"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="0 0 25 0"/>
 
+            <StackPanel VerticalAlignment="Center"
+                        Margin="30 0 0 0">
                 <TextBlock Text="Meeple House"
-FontSize="26"
-FontWeight="Bold"
-Foreground="White"
-HorizontalAlignment="Center"/>
+                           FontSize="30"
+                           FontWeight="Bold"
+                           Foreground="White"/>
 
-                <TextBlock Text="Кружок настольных игр"
-FontSize="12"
-Foreground="White"
-HorizontalAlignment="Center"/>
-
+                <TextBlock Text="Вход в аккаунт"
+                           FontSize="15"
+                           Foreground="#B9DEB5"
+                           Margin="2 4 0 0"/>
             </StackPanel>
-
         </Grid>
 
-        <!-- Форма -->
-        <Border Grid.Row="1"
-Background="White"
-Margin="40,40,40,114"
-CornerRadius="10"
-Padding="30">
+        <!-- ФОРМА -->
+        <Border
+                Background="White"
+                Margin="30,120,30,-86"
+                CornerRadius="24"
+                Padding="30" Grid.RowSpan="2">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="18"
+                                  ShadowDepth="4"
+                                  Opacity="0.16"/>
+            </Border.Effect>
 
             <StackPanel>
 
-                <TextBlock Text="Авторизация"
-FontSize="22"
-FontWeight="Bold"
-HorizontalAlignment="Center"
-Margin="0 0 0 20"/>
+                <Border Width="90"
+                        Height="90"
+                        CornerRadius="45"
+                        Background="#E8F5E9"
+                        HorizontalAlignment="Center"
+                        Margin="0 0 0 20">
+                    <TextBlock Text="👤"
+                               FontSize="42"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </Border>
 
-                <TextBlock Text="Логин"/>
+                <TextBlock Text="Авторизация"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="#263238"
+                           HorizontalAlignment="Center"
+                           Margin="0 0 0 30"/>
+
+                <TextBlock Text="Логин"
+                           FontSize="14"
+                           Foreground="#607D8B"
+                           Margin="4 0 0 6"/>
 
                 <TextBox x:Name="LoginBox"
-Height="30"
-Margin="0 5 0 15"/>
+                         Style="{StaticResource ModernTextBoxStyle}"
+                         Margin="0 0 0 18"/>
 
-                <TextBlock Text="Пароль"/>
+                <TextBlock Text="Пароль"
+                           FontSize="14"
+                           Foreground="#607D8B"
+                           Margin="4 0 0 6"/>
 
                 <PasswordBox x:Name="PasswordBox"
-Height="30"
-Margin="0 5 0 20"/>
+                             Style="{StaticResource ModernPasswordBoxStyle}"
+                             Margin="0 0 0 30"/>
 
                 <Button Content="Войти"
-Height="35"
-Background="#4CAF50"
-Foreground="White"
-Click="Login_Click"/>
+                        Style="{StaticResource MainButtonStyle}"
+                        Click="Login_Click"/>
 
                 <Button Content="Регистрация"
-Height="35"
-Margin="0 10 0 0"
-Click="Register_Click"/>
+                        Style="{StaticResource SecondButtonStyle}"
+                        Margin="0 12 0 0"
+                        Click="Register_Click"/>
 
             </StackPanel>
-
         </Border>
-
     </Grid>
 </Window>

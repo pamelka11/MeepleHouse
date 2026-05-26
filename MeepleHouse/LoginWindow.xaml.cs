@@ -56,8 +56,10 @@ namespace MeepleHouse
 
         private void Register_Click(object sender, RoutedEventArgs e)
         {
-            RegisterWindow window = new RegisterWindow();
-            window.ShowDialog();
+            RegisterWindow registerWindow = new RegisterWindow();
+            registerWindow.Show();
+
+            this.Close();
         }
     }
 }

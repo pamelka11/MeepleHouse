@@ -2,156 +2,403 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Meeple House"
-        Height="700"
-        Width="1000"
+        Height="778"
+        Width="1180"
         WindowStartupLocation="CenterScreen"
-        Background="#F2F2F2">
+        Background="#F7F9F8"
+        FontFamily="Segoe UI">
+
+    <Window.Resources>
+
+        <Style x:Key="LoginButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="170"/>
+            <Setter Property="Height" Value="54"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#1B6B32"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="27">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="20"
+                                                  ShadowDepth="4"
+                                                  Opacity="0.25"/>
+                            </Border.Effect>
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="👤"
+                                           FontSize="20"
+                                           Margin="0 0 10 0"/>
+                                <ContentPresenter VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GameCardStyle" TargetType="Button">
+            <Setter Property="Width" Value="205"/>
+            <Setter Property="Height" Value="205"/>
+            <Setter Property="Margin" Value="14"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="14"
+                                                  ShadowDepth="3"
+                                                  Opacity="0.18"/>
+                            </Border.Effect>
+                            <ContentPresenter/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="1.03" ScaleY="1.03"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
 
     <Grid>
-
         <Grid.RowDefinitions>
-            <RowDefinition Height="90"/>
+            <RowDefinition Height="260"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-
         <!-- ШАПКА -->
-        <Grid Background="#4CAF50">
+        <Grid Grid.Row="0">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#0E3B22" Offset="0"/>
+                    <GradientStop Color="#0F6B2C" Offset="0.55"/>
+                    <GradientStop Color="#167A35" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
 
-            <TextBlock Text="Meeple House"
-FontSize="30"
-FontWeight="Bold"
-Foreground="White"
-HorizontalAlignment="Center"
-VerticalAlignment="Center"/>
+            <TextBlock Text="🎲  🎴  ♟  🎯  🧩  🎲"
+                       FontSize="54"
+                       Opacity="0.08"
+                       Foreground="White"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0 25 60 0"/>
 
-            <TextBlock Text="Кружок настольных игр"
-FontSize="12"
-Foreground="White"
-HorizontalAlignment="Center"
-VerticalAlignment="Bottom"
-Margin="0 0 0 15"/>
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Margin="70 0 0 15">
+
+                <Border Width="110"
+                        Height="110"
+                        CornerRadius="28"
+                        BorderBrush="White"
+                        BorderThickness="5"
+                        Margin="0 0 35 0">
+                    <TextBlock Text="♟"
+                               FontSize="62"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </Border>
+
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Meeple House"
+                               FontSize="48"
+                               FontWeight="Bold"
+                               Foreground="White"/>
+
+                    <TextBlock Text="Кружок настольных игр"
+                               FontSize="22"
+                               Foreground="#B9DEB5"
+                               Margin="4 5 0 0"/>
+
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0 14 0 0">
+                        <Rectangle Width="120"
+                                   Height="2"
+                                   Fill="#7FCB7A"
+                                   Margin="0 12 22 0"/>
+                        <TextBlock Text="🎲"
+                                   FontSize="24"
+                                   Foreground="#8DD681"/>
+                        <Rectangle Width="120"
+                                   Height="2"
+                                   Fill="#7FCB7A"
+                                   Margin="22 12 0 0"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
 
             <Button Content="Авторизация"
-Width="120"
-Height="35"
-HorizontalAlignment="Right"
-VerticalAlignment="Top"
-Margin="0 20 20 0"
-Click="Login_Click"/>
-
+                    Style="{StaticResource LoginButtonStyle}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0 0 70 10"
+                    Click="Login_Click"/>
         </Grid>
 
+        <!-- КАРТОЧКИ -->
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto" Height="481" VerticalAlignment="Top">
+            <Grid Margin="35 28 35 20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
 
-        <!-- КАРТОЧКИ ИГР -->
+                <UniformGrid Columns="5"
+                             Grid.Row="0">
 
-        <ScrollViewer Grid.Row="1">
+                    <Button Click="Carcassonne_Click" Style="{StaticResource GameCardStyle}">
+                        <StackPanel>
+                            <Border Height="130"
+                                    CornerRadius="10 10 0 0"
+                                    ClipToBounds="True">
+                                <Image Source="ButtonImage\carcason.png"
+                                       Stretch="UniformToFill"/>
+                            </Border>
+                            <Grid Margin="12 10 12 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="34"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Каркассон" FontSize="16" FontWeight="Bold" Foreground="#263238"/>
+                                    <TextBlock Text="Стратегическая игра" FontSize="12" Foreground="#607D8B" Margin="0 4 0 0"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" Width="30" Height="30" CornerRadius="15" Background="#E5F3E8">
+                                    <TextBlock Text="›" FontSize="28" FontWeight="Bold" Foreground="#1B6B32"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -5 0 0"/>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
 
-            <UniformGrid Columns="4" Margin="30">
+                    <Button Click="Munchkin_Click" Style="{StaticResource GameCardStyle}">
+                        <StackPanel>
+                            <Border Height="130" CornerRadius="10 10 0 0" ClipToBounds="True">
+                                <Image Source="ButtonImage\Munchcin.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Grid Margin="12 10 12 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="34"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Манчкин" FontSize="16" FontWeight="Bold" Foreground="#263238"/>
+                                    <TextBlock Text="Карточная игра" FontSize="12" Foreground="#607D8B" Margin="0 4 0 0"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" Width="30" Height="30" CornerRadius="15" Background="#E5F3E8">
+                                    <TextBlock Text="›" FontSize="28" FontWeight="Bold" Foreground="#1B6B32"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -5 0 0"/>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
 
-    <!-- Каркассон -->
-    <Button Click="Carcassonne_Click" Margin="10" Background="Transparent" BorderThickness="0">
-        <StackPanel>
-            <Border Height="130" CornerRadius="10" ClipToBounds="True">
-                            <Image Source="ButtonImage\carcason.png"/>
-            </Border>
-            <TextBlock Text="Каркассон" HorizontalAlignment="Center" Margin="5"/>
-        </StackPanel>
-    </Button>
+                    <Button Click="Catan_Click" Style="{StaticResource GameCardStyle}">
+                        <StackPanel>
+                            <Border Height="130" CornerRadius="10 10 0 0" ClipToBounds="True">
+                                <Image Source="ButtonImage\catan.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Grid Margin="12 10 12 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="34"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Колонизаторы" FontSize="16" FontWeight="Bold" Foreground="#263238"/>
+                                    <TextBlock Text="Экономическая стратегия" FontSize="12" Foreground="#607D8B" Margin="0 4 0 0"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" Width="30" Height="30" CornerRadius="15" Background="#E5F3E8">
+                                    <TextBlock Text="›" FontSize="28" FontWeight="Bold" Foreground="#1B6B32"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -5 0 0"/>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
 
-    <!-- Манчкин -->
-    <Button Click="Munchkin_Click" Margin="10" Background="Transparent" BorderThickness="0">
-        <StackPanel>
-            <Border Height="130" CornerRadius="10" ClipToBounds="True">
-                            <Image Source="ButtonImage\Munchcin.png"/>
-            </Border>
-            <TextBlock Text="Манчкин" HorizontalAlignment="Center" Margin="5"/>
-        </StackPanel>
-    </Button>
+                    <Button Click="Mafia_Click" Style="{StaticResource GameCardStyle}">
+                        <StackPanel>
+                            <Border Height="130" CornerRadius="10 10 0 0" ClipToBounds="True">
+                                <Image Source="ButtonImage\mafia.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Grid Margin="12 10 12 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="34"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Мафия" FontSize="16" FontWeight="Bold" Foreground="#263238"/>
+                                    <TextBlock Text="Психологическая игра" FontSize="12" Foreground="#607D8B" Margin="0 4 0 0"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" Width="30" Height="30" CornerRadius="15" Background="#E5F3E8">
+                                    <TextBlock Text="›" FontSize="28" FontWeight="Bold" Foreground="#1B6B32"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -5 0 0"/>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
 
-    <!-- Катан -->
-    <Button Click="Catan_Click" Margin="10" Background="Transparent" BorderThickness="0">
-        <StackPanel>
-            <Border Height="130" CornerRadius="10" ClipToBounds="True">
-                            <Image Source="ButtonImage\catan.png"/>
-            </Border>
-            <TextBlock Text="Колонизаторы" HorizontalAlignment="Center" Margin="5"/>
-        </StackPanel>
-    </Button>
+                    <Button Click="Dixit_Click" Style="{StaticResource GameCardStyle}">
+                        <StackPanel>
+                            <Border Height="130" CornerRadius="10 10 0 0" ClipToBounds="True">
+                                <Image Source="ButtonImage\dixit.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Grid Margin="12 10 12 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="34"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Диксит" FontSize="16" FontWeight="Bold" Foreground="#263238"/>
+                                    <TextBlock Text="Ассоциативная игра" FontSize="12" Foreground="#607D8B" Margin="0 4 0 0"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" Width="30" Height="30" CornerRadius="15" Background="#E5F3E8">
+                                    <TextBlock Text="›" FontSize="28" FontWeight="Bold" Foreground="#1B6B32"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -5 0 0"/>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
 
-    <!-- Мафия -->
-    <Button Click="Mafia_Click" Margin="10" Background="Transparent" BorderThickness="0">
-        <StackPanel>
-            <Border Height="130" CornerRadius="10" ClipToBounds="True">
-                            <Image Source="ButtonImage\mafia.png"/>
-            </Border>
-            <TextBlock Text="Мафия" HorizontalAlignment="Center" Margin="5"/>
-        </StackPanel>
-    </Button>
+                    <Button Click="Ticket_Click" Style="{StaticResource GameCardStyle}">
+                        <StackPanel>
+                            <Border Height="130" CornerRadius="10 10 0 0" ClipToBounds="True">
+                                <Image Source="ButtonImage/ticket.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Grid Margin="12 10 12 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="34"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Билет на поезд" FontSize="16" FontWeight="Bold" Foreground="#263238"/>
+                                    <TextBlock Text="Семейная стратегия" FontSize="12" Foreground="#607D8B" Margin="0 4 0 0"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" Width="30" Height="30" CornerRadius="15" Background="#E5F3E8">
+                                    <TextBlock Text="›" FontSize="28" FontWeight="Bold" Foreground="#1B6B32"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -5 0 0"/>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
 
-    <!-- Диксит -->
-    <Button Click="Dixit_Click" Margin="10" Background="Transparent" BorderThickness="0">
-        <StackPanel>
-            <Border Height="130" CornerRadius="10" ClipToBounds="True">
-                            <Image Source="ButtonImage\dixit.png"/>
-            </Border>
-            <TextBlock Text="Диксит" HorizontalAlignment="Center" Margin="5"/>
-        </StackPanel>
-    </Button>
+                    <Button Click="Seven_Click" Style="{StaticResource GameCardStyle}">
+                        <StackPanel>
+                            <Border Height="130" CornerRadius="10 10 0 0" ClipToBounds="True">
+                                <Image Source="ButtonImage/7wonders.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Grid Margin="12 10 12 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="34"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="7 чудес" FontSize="16" FontWeight="Bold" Foreground="#263238"/>
+                                    <TextBlock Text="Цивилизационная игра" FontSize="12" Foreground="#607D8B" Margin="0 4 0 0"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" Width="30" Height="30" CornerRadius="15" Background="#E5F3E8">
+                                    <TextBlock Text="›" FontSize="28" FontWeight="Bold" Foreground="#1B6B32"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -5 0 0"/>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
 
-    <!-- Ticket to Ride -->
-    <Button Click="Ticket_Click" Margin="10" Background="Transparent" BorderThickness="0">
-        <StackPanel>
-            <Border Height="130" CornerRadius="10" ClipToBounds="True">
-                <Image Source="ButtonImage/ticket.png"/>
-            </Border>
-            <TextBlock Text="Билет на поезд" HorizontalAlignment="Center" Margin="5"/>
-        </StackPanel>
-    </Button>
+                    <Button Click="Imaginarium_Click" Style="{StaticResource GameCardStyle}">
+                        <StackPanel>
+                            <Border Height="130" CornerRadius="10 10 0 0" ClipToBounds="True">
+                                <Image Source="ButtonImage/imaginarium.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Grid Margin="12 10 12 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="34"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Имаджинариум" FontSize="16" FontWeight="Bold" Foreground="#263238"/>
+                                    <TextBlock Text="Игра на воображение" FontSize="12" Foreground="#607D8B" Margin="0 4 0 0"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" Width="30" Height="30" CornerRadius="15" Background="#E5F3E8">
+                                    <TextBlock Text="›" FontSize="28" FontWeight="Bold" Foreground="#1B6B32"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -5 0 0"/>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
 
-    <!-- 7 Wonders -->
-    <Button Click="Seven_Click" Margin="10" Background="Transparent" BorderThickness="0">
-        <StackPanel>
-            <Border Height="130" CornerRadius="10" ClipToBounds="True">
-                <Image Source="ButtonImage/7wonders.png"/>
-            </Border>
-            <TextBlock Text="7 чудес" HorizontalAlignment="Center" Margin="5"/>
-        </StackPanel>
-    </Button>
+                    <Button Click="Uno_Click" Style="{StaticResource GameCardStyle}">
+                        <StackPanel>
+                            <Border Height="130" CornerRadius="10 10 0 0" ClipToBounds="True">
+                                <Image Source="ButtonImage/uno.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Grid Margin="12 10 12 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="34"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Уно" FontSize="16" FontWeight="Bold" Foreground="#263238"/>
+                                    <TextBlock Text="Карточная игра" FontSize="12" Foreground="#607D8B" Margin="0 4 0 0"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" Width="30" Height="30" CornerRadius="15" Background="#E5F3E8">
+                                    <TextBlock Text="›" FontSize="28" FontWeight="Bold" Foreground="#1B6B32"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -5 0 0"/>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
 
-    <!-- Имаджинариум -->
-    <Button Click="Imaginarium_Click" Margin="10" Background="Transparent" BorderThickness="0">
-        <StackPanel>
-            <Border Height="130" CornerRadius="10" ClipToBounds="True">
-                <Image Source="ButtonImage/imaginarium.png"/>
-            </Border>
-            <TextBlock Text="Имаджинариум" HorizontalAlignment="Center" Margin="5"/>
-        </StackPanel>
-    </Button>
+                    <Button Click="Pandemic_Click" Style="{StaticResource GameCardStyle}">
+                        <StackPanel>
+                            <Border Height="130" CornerRadius="10 10 0 0" ClipToBounds="True">
+                                <Image Source="ButtonImage/pandemic.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Grid Margin="12 10 12 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="34"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Пандемия" FontSize="16" FontWeight="Bold" Foreground="#263238"/>
+                                    <TextBlock Text="Кооперативная игра" FontSize="12" Foreground="#607D8B" Margin="0 4 0 0"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" Width="30" Height="30" CornerRadius="15" Background="#E5F3E8">
+                                    <TextBlock Text="›" FontSize="28" FontWeight="Bold" Foreground="#1B6B32"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -5 0 0"/>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
 
-    <!-- Уно -->
-    <Button Click="Uno_Click" Margin="10" Background="Transparent" BorderThickness="0">
-        <StackPanel>
-            <Border Height="130" CornerRadius="10" ClipToBounds="True">
-                <Image Source="ButtonImage/uno.png"/>
-            </Border>
-            <TextBlock Text="Уно" HorizontalAlignment="Center" Margin="5"/>
-        </StackPanel>
-    </Button>
-
-    <!-- Пандемия -->
-    <Button Click="Pandemic_Click" Margin="10" Background="Transparent" BorderThickness="0">
-        <StackPanel>
-            <Border Height="130" CornerRadius="10" ClipToBounds="True">
-                <Image Source="ButtonImage/pandemic.png"/>
-            </Border>
-            <TextBlock Text="Пандемия" HorizontalAlignment="Center" Margin="5"/>
-        </StackPanel>
-    </Button>
-
-</UniformGrid>
-
+                </UniformGrid>
+            </Grid>
         </ScrollViewer>
-
     </Grid>
 </Window>

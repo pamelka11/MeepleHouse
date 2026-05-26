@@ -20,11 +20,16 @@ namespace MeepleHouse
 
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
+
             EditProfileWindow window = new EditProfileWindow();
+            window.Owner = this;
+
             window.ShowDialog();
 
-            // обновляем данные после редактирования
             LoadUser();
+
+            this.Show();
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
