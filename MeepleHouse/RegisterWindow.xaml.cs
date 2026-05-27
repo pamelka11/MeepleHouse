@@ -51,6 +51,9 @@ namespace MeepleHouse
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+
             this.Close();
         }
     }
