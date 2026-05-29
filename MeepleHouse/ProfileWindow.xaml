@@ -8,34 +8,58 @@
         Background="#EEF5EE"
         ResizeMode="NoResize">
 
-    <Grid Margin="0,0,0,150">
+    <Window.Resources>
 
-        <!-- ФОН -->
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="280"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#E8F5E9" Offset="0"/>
-                <GradientStop Color="#F5FFF5" Offset="1"/>
+                <GradientStop Color="#F1F8F2" Offset="0"/>
+                <GradientStop Color="#FFFFFF" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
 
         <!-- ШАПКА -->
-        <Border Height="90"
+        <Border Height="150"
                 VerticalAlignment="Top"
-                Background="#43A047"
-                CornerRadius="0,0,25,25">
+                Background="#0B6B2B">
 
             <StackPanel VerticalAlignment="Center">
 
                 <TextBlock Text="Meeple House"
-                           FontSize="28"
+                           FontSize="30"
                            FontWeight="Bold"
                            Foreground="White"
                            HorizontalAlignment="Center"/>
 
                 <TextBlock Text="Кружок настольных игр"
                            FontSize="13"
-                           Foreground="#E8F5E9"
-                           HorizontalAlignment="Center"/>
+                           Foreground="#D8F5DD"
+                           HorizontalAlignment="Center"
+                           Margin="0,5,0,0"/>
 
             </StackPanel>
 
@@ -46,12 +70,14 @@
                 Padding="30"
                 CornerRadius="20"
                 Background="White"
-                HorizontalAlignment="Center" Margin="0,95,0,-140">
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="0,115,0,0">
 
             <Border.Effect>
-                <DropShadowEffect BlurRadius="15"
+                <DropShadowEffect BlurRadius="16"
                                   ShadowDepth="3"
-                                  Opacity="0.2"/>
+                                  Opacity="0.22"/>
             </Border.Effect>
 
             <StackPanel>
@@ -62,7 +88,7 @@
                         CornerRadius="45"
                         Background="#C8E6C9"
                         HorizontalAlignment="Center"
-                        Margin="0 0 0 15">
+                        Margin="0,0,0,15">
 
                     <TextBlock Text="👤"
                                FontSize="42"
@@ -75,136 +101,68 @@
                            FontWeight="Bold"
                            Foreground="#2E7D32"
                            HorizontalAlignment="Center"
-                           Margin="0 0 0 25" Height="36"/>
+                           Margin="0,0,0,25"/>
 
                 <!-- ДАННЫЕ -->
-
                 <TextBlock Text="ФИО"
                            FontWeight="SemiBold"
                            Foreground="#555"/>
 
-                <Border Background="#F7F7F7"
+                <Border Background="#F4F7F5"
                         CornerRadius="10"
                         Padding="12"
-                        Margin="0 5 0 15">
+                        Margin="0,5,0,15">
 
                     <TextBlock x:Name="NameText"
-                               FontSize="16"/>
+                               FontSize="16"
+                               Foreground="#263238"/>
                 </Border>
 
                 <TextBlock Text="Email"
                            FontWeight="SemiBold"
                            Foreground="#555"/>
 
-                <Border Background="#F7F7F7"
+                <Border Background="#F4F7F5"
                         CornerRadius="10"
                         Padding="12"
-                        Margin="0 5 0 15">
+                        Margin="0,5,0,15">
 
                     <TextBlock x:Name="EmailText"
-                               FontSize="16"/>
+                               FontSize="16"
+                               Foreground="#263238"/>
                 </Border>
 
                 <TextBlock Text="Телефон"
                            FontWeight="SemiBold"
                            Foreground="#555"/>
 
-                <Border Background="#F7F7F7"
+                <Border Background="#F4F7F5"
                         CornerRadius="10"
                         Padding="12"
-                        Margin="0 5 0 25">
+                        Margin="0,5,0,25">
 
                     <TextBlock x:Name="PhoneText"
-                               FontSize="16"/>
+                               FontSize="16"
+                               Foreground="#263238"/>
                 </Border>
 
                 <!-- КНОПКИ -->
-
                 <Button Content="Мои записи"
-                        Height="42"
-                        FontSize="15"
-                        FontWeight="SemiBold"
-                        Background="#4CAF50"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Margin="0 0 0 10"
-                        Click="MyRegistrations_Click">
-
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}"
-                                                CornerRadius="12">
-                                            <ContentPresenter HorizontalAlignment="Center"
-                                                              VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-
-                </Button>
+                        Background="#0B7A34"
+                        Margin="0,0,0,12"
+                        Click="MyRegistrations_Click"
+                        Style="{StaticResource RoundedButtonStyle}"/>
 
                 <Button Content="Редактировать профиль"
-                        Height="42"
-                        FontSize="15"
-                        FontWeight="SemiBold"
-                        Background="#66BB6A"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Margin="0 0 0 10"
-                        Click="Edit_Click">
-
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}"
-                                                CornerRadius="12">
-                                            <ContentPresenter HorizontalAlignment="Center"
-                                                              VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-
-                </Button>
+                        Background="#198C43"
+                        Margin="0,0,0,12"
+                        Click="Edit_Click"
+                        Style="{StaticResource RoundedButtonStyle}"/>
 
                 <Button Content="Выйти"
-                        Height="42"
-                        FontSize="15"
-                        FontWeight="SemiBold"
                         Background="#E53935"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Click="Logout_Click">
-
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}"
-                                                CornerRadius="12">
-                                            <ContentPresenter HorizontalAlignment="Center"
-                                                              VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-
-                </Button>
+                        Click="Logout_Click"
+                        Style="{StaticResource RoundedButtonStyle}"/>
 
             </StackPanel>
 
