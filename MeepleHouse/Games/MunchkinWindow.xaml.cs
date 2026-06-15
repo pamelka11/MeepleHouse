@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 
 namespace MeepleHouse.Games
@@ -8,92 +7,88 @@ namespace MeepleHouse.Games
     {
         MeepleHouseDB2Entities db = new MeepleHouseDB2Entities();
 
-        int gameId = 2; // МАНЧКИН
+        private int gameId;
 
         public MunchkinWindow()
         {
             InitializeComponent();
-            LoadPlayers();
+
+            LoadGameData();
         }
 
-        void LoadPlayers()
+        private void LoadGameData()
         {
-            int registered = db.Registrations.Count(r => r.GameId == gameId);
+            var game = db.BoardGames.FirstOrDefault(g => g.Title == "Манчкин");
 
-            int maxPlayers = db.BoardGames
-                .Where(g => g.Id == gameId)
-                .Select(g => g.MaxPlayers)
-                .FirstOrDefault() ?? 0;
+            if (game == null)
+            {
+                MessageBox.Show("Игра не найдена в базе данных");
+                return;
+            }
 
-            PlayersText.Text = "Записано: " + registered + " из " + maxPlayers;
+            gameId = game.Id;
+
+            DateText.Text = "Ближайшая игра: 2 июля 11:30";
+
+            int registeredCount = db.Registrations
+                .Count(r => r.GameId == gameId);
+
+            PlayersText.Text = "Записано: " + registeredCount + " из " + game.MaxPlayers;
         }
 
         private void Register_Click(object sender, RoutedEventArgs e)
         {
-            // проверка авторизации
             if (Session.CurrentUser == null)
             {
-                MessageBox.Show("Вы не авторизованы");
+                MessageBox.Show("Для записи необходимо авторизоваться");
+
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.Show();
+
+                this.Close();
                 return;
             }
 
-            // проверка: уже записан
-            bool exists = db.Registrations.Any(r =>
-                r.GameId == gameId &&
-                r.UserId == Session.CurrentUser.Id);
+            bool alreadyRegistered = db.Registrations.Any(r =>
+                r.UserId == Session.CurrentUser.Id &&
+                r.GameId == gameId);
 
-            if (exists)
+            if (alreadyRegistered)
             {
-                MessageBox.Show("Вы уже записаны на этот кружок");
+                MessageBox.Show("Вы уже записаны на эту игру");
                 return;
             }
 
-            // сколько уже записано
-            int registered = db.Registrations.Count(r => r.GameId == gameId);
+            var game = db.BoardGames.FirstOrDefault(g => g.Id == gameId);
 
-            // максимум игроков
-            int maxPlayers = db.BoardGames
-                .Where(g => g.Id == gameId)
-                .Select(g => g.MaxPlayers)
-                .FirstOrDefault() ?? 0;
-
-            // проверка заполненности
-            if (registered >= maxPlayers)
+            if (game == null)
             {
-                MessageBox.Show("Группа уже заполнена");
+                MessageBox.Show("Игра не найдена");
                 return;
             }
 
-            // создание записи
-            Registrations reg = new Registrations
+            int registeredCount = db.Registrations
+                .Count(r => r.GameId == gameId);
+
+            if (registeredCount >= game.MaxPlayers)
             {
-                GameId = gameId,
+                MessageBox.Show("На эту игру уже нет свободных мест");
+                return;
+            }
+
+            Registrations registration = new Registrations
+            {
                 UserId = Session.CurrentUser.Id,
-                RegistrationDate = DateTime.Now
+                GameId = gameId,
+                RegistrationDate = System.DateTime.Now
             };
 
-            try
-            {
-                db.Registrations.Add(reg);   // 🔥 ВАЖНО
-                db.SaveChanges();            // 🔥 ВАЖНО
+            db.Registrations.Add(registration);
+            db.SaveChanges();
 
-                MessageBox.Show("Вы успешно записались");
+            MessageBox.Show("Вы успешно записались на игру");
 
-                LoadPlayers(); // обновление
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка: " + ex.InnerException?.Message);
-            }
-        }
-
-        void LoadDate()
-        {
-            DateTime baseTime = new DateTime(2026, 7, 1, 10, 25, 0);
-
-            DateTime gameTime = baseTime.AddHours(gameId - 1);
-
-            DateText.Text = "Ближайшая игра: " + gameTime.ToString("d MMMM HH:mm");
+            LoadGameData();
         }
     }
-    }
+}
