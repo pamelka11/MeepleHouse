@@ -29,5 +29,12 @@ namespace MeepleHouse
         public DbSet<Registrations> Registrations { get; set; }
         public DbSet<sysdiagrams> sysdiagrams { get; set; }
         public DbSet<Users> Users { get; set; }
+        public DbSet<Admins> Admins { get; set; }
+        public DbSet<Complaints> Complaints { get; set; }
+        public DbSet<Image> Image { get; set; }
+        public DbSet<WorkerComplaints> WorkerComplaints { get; set; }
+        public DbSet<Workers> Workers { get; set; }
+        public DbSet<WorkerGameAssignments> WorkerGameAssignments { get; set; }
+        public DbSet<BlockedUsers> BlockedUsers { get; set; }
     }
 }

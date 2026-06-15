@@ -4,13 +4,33 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b87e0be2cf1445828699703e91435db8" Name="Diagram1">
+      <Diagram DiagramId="b87e0be2cf1445828699703e91435db8" Name="Diagram1" ZoomLevel="81">
         <EntityTypeShape EntityType="MeepleHouseDB2Model.BoardGames" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MeepleHouseDB2Model.Registrations" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MeepleHouseDB2Model.sysdiagrams" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MeepleHouseDB2Model.Users" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
         <AssociationConnector Association="MeepleHouseDB2Model.FK__Registrat__GameI__628FA481" ManuallyRouted="false" />
         <AssociationConnector Association="MeepleHouseDB2Model.FK__Registrat__UserI__619B8048" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MeepleHouseDB2Model.Admins" Width="1.5" PointX="2.75" PointY="9.125" />
+        <EntityTypeShape EntityType="MeepleHouseDB2Model.Complaints" Width="1.5" PointX="2.75" PointY="13.625" />
+        <EntityTypeShape EntityType="MeepleHouseDB2Model.Image" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MeepleHouseDB2Model.WorkerComplaints" Width="1.5" PointX="5" PointY="4.625" />
+        <EntityTypeShape EntityType="MeepleHouseDB2Model.Workers" Width="1.5" PointX="2.75" PointY="16.125" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_Admins_CreatedByAdmin" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_WorkerComplaints_Admins" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_Workers_CreatedByAdmin" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_WorkerComplaints_Complaints" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_WorkerComplaints_Users" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_WorkerComplaints_Workers" />
+        <EntityTypeShape EntityType="MeepleHouseDB2Model.WorkerGameAssignments" Width="1.5" PointX="5" PointY="9.75" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_WorkerGameAssignments_Admins" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_WorkerGameAssignments_BoardGames" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_WorkerGameAssignments_Workers" />
+        <EntityTypeShape EntityType="MeepleHouseDB2Model.BlockedUsers" Width="1.5" PointX="5" PointY="13.5" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_BlockedUsers_Admins_BlockedBy" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_BlockedUsers_Admins_UnblockedBy" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_BlockedUsers_Users" />
+        <AssociationConnector Association="MeepleHouseDB2Model.FK_BlockedUsers_Workers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,13 +12,16 @@ namespace MeepleHouse
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class Admins
     {
-        public Users()
+        public Admins()
         {
-            this.Registrations = new HashSet<Registrations>();
+            this.Admins1 = new HashSet<Admins>();
             this.WorkerComplaints = new HashSet<WorkerComplaints>();
+            this.Workers = new HashSet<Workers>();
+            this.WorkerGameAssignments = new HashSet<WorkerGameAssignments>();
             this.BlockedUsers = new HashSet<BlockedUsers>();
+            this.BlockedUsers1 = new HashSet<BlockedUsers>();
         }
     
         public int Id { get; set; }
@@ -27,12 +30,17 @@ namespace MeepleHouse
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public Nullable<int> CreatedByAdminId { get; set; }
+        public System.DateTime CreatedAt { get; set; }
         public bool IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletedAt { get; set; }
-        public bool IsBlocked { get; set; }
     
-        public virtual ICollection<Registrations> Registrations { get; set; }
+        public virtual ICollection<Admins> Admins1 { get; set; }
+        public virtual Admins Admins2 { get; set; }
         public virtual ICollection<WorkerComplaints> WorkerComplaints { get; set; }
+        public virtual ICollection<Workers> Workers { get; set; }
+        public virtual ICollection<WorkerGameAssignments> WorkerGameAssignments { get; set; }
         public virtual ICollection<BlockedUsers> BlockedUsers { get; set; }
+        public virtual ICollection<BlockedUsers> BlockedUsers1 { get; set; }
     }
 }

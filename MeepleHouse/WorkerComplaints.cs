@@ -12,21 +12,21 @@ namespace MeepleHouse
     using System;
     using System.Collections.Generic;
     
-    public partial class BoardGames
+    public partial class WorkerComplaints
     {
-        public BoardGames()
-        {
-            this.Registrations = new HashSet<Registrations>();
-            this.WorkerGameAssignments = new HashSet<WorkerGameAssignments>();
-        }
-    
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> MinPlayers { get; set; }
-        public Nullable<int> MaxPlayers { get; set; }
+        public int WorkerId { get; set; }
+        public int UserId { get; set; }
+        public int ComplaintId { get; set; }
+        public string ComplaintText { get; set; }
+        public System.DateTime ComplaintDate { get; set; }
+        public bool IsReviewed { get; set; }
+        public Nullable<System.DateTime> ReviewedAt { get; set; }
+        public Nullable<int> ReviewedByAdminId { get; set; }
     
-        public virtual ICollection<Registrations> Registrations { get; set; }
-        public virtual ICollection<WorkerGameAssignments> WorkerGameAssignments { get; set; }
+        public virtual Admins Admins { get; set; }
+        public virtual Complaints Complaints { get; set; }
+        public virtual Users Users { get; set; }
+        public virtual Workers Workers { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace MeepleHouse
 {
@@ -15,8 +14,8 @@ namespace MeepleHouse
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            string login = LoginBox.Text;
-            string password = PasswordBox.Password;
+            string login = LoginBox.Text.Trim();
+            string password = PasswordBox.Password.Trim();
 
             if (login == "" || password == "")
             {
@@ -26,7 +25,8 @@ namespace MeepleHouse
 
             var user = db.Users.FirstOrDefault(u =>
                 u.Username == login &&
-                u.Password == password);
+                u.Password == password &&
+                u.IsDeleted == false);
 
             if (user == null)
             {
@@ -34,32 +34,51 @@ namespace MeepleHouse
                 return;
             }
 
-            Session.CurrentUser = user;
-
-            MessageBox.Show("Вы успешно авторизовались");
-
-            MainWindow1 window = new MainWindow1();
-            window.Show();
-
-            // закрываем главное окно (неавторизованное)
-            foreach (Window w in Application.Current.Windows)
+            if (user.IsBlocked == true)
             {
-                if (w is MainWindow)
-                {
-                    w.Close();
-                    break;
-                }
+                MessageBox.Show("Ваш аккаунт заблокирован администратором");
+                return;
             }
 
-            this.Close();
+            Session.CurrentUser = user;
+            Session.CurrentAdmin = null;
+            Session.CurrentWorker = null;
+            Session.CurrentRole = "User";
+
+            MainWindow1 mainWindow = new MainWindow1();
+            Application.Current.MainWindow = mainWindow;
+            mainWindow.Show();
+
+            CloseOtherWindows(mainWindow);
         }
 
         private void Register_Click(object sender, RoutedEventArgs e)
         {
             RegisterWindow registerWindow = new RegisterWindow();
+            Application.Current.MainWindow = registerWindow;
             registerWindow.Show();
 
             this.Close();
+        }
+
+        private void WorkerLogin_Click(object sender, RoutedEventArgs e)
+        {
+            WorkerLoginWindow workerLoginWindow = new WorkerLoginWindow();
+            Application.Current.MainWindow = workerLoginWindow;
+            workerLoginWindow.Show();
+
+            this.Close();
+        }
+
+        private void CloseOtherWindows(Window activeWindow)
+        {
+            foreach (Window window in Application.Current.Windows.Cast<Window>().ToList())
+            {
+                if (window != activeWindow)
+                {
+                    window.Close();
+                }
+            }
         }
     }
 }

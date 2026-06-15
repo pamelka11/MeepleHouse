@@ -4,7 +4,37 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище MeepleHouseDB2Model" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище MeepleHouseDB2Model" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="30" />
+          <Property Name="CreatedByAdminId" Type="int" />
+          <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedAt" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="BlockedUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="WorkerId" Type="int" />
+          <Property Name="ComplaintTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ComplaintText" Type="nvarchar(max)" />
+          <Property Name="BlockedByAdminId" Type="int" Nullable="false" />
+          <Property Name="BlockedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="UnblockedByAdminId" Type="int" />
+          <Property Name="UnblockedAt" Type="datetime2" Precision="7" />
+        </EntityType>
         <EntityType Name="BoardGames">
           <Key>
             <PropertyRef Name="Id" />
@@ -14,6 +44,21 @@
           <Property Name="Description" Type="nvarchar" MaxLength="255" />
           <Property Name="MinPlayers" Type="int" />
           <Property Name="MaxPlayers" Type="int" />
+        </EntityType>
+        <EntityType Name="Complaints">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="image" Type="image" />
         </EntityType>
         <EntityType Name="Registrations">
           <Key>
@@ -44,6 +89,50 @@
           <Property Name="FullName" Type="nvarchar" MaxLength="100" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" />
           <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedAt" Type="datetime2" Precision="7" />
+          <Property Name="IsBlocked" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkerComplaints">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkerId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ComplaintId" Type="int" Nullable="false" />
+          <Property Name="ComplaintText" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ComplaintDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IsReviewed" Type="bit" Nullable="false" />
+          <Property Name="ReviewedAt" Type="datetime2" Precision="7" />
+          <Property Name="ReviewedByAdminId" Type="int" />
+        </EntityType>
+        <EntityType Name="WorkerGameAssignments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkerId" Type="int" Nullable="false" />
+          <Property Name="GameId" Type="int" Nullable="false" />
+          <Property Name="AssignedByAdminId" Type="int" Nullable="false" />
+          <Property Name="AssignedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="RemovedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="30" />
+          <Property Name="CreatedByAdminId" Type="int" />
+          <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedAt" Type="datetime2" Precision="7" />
         </EntityType>
         <Association Name="FK__Registrat__GameI__628FA481">
           <End Role="BoardGames" Type="Self.BoardGames" Multiplicity="1" />
@@ -69,11 +158,174 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Admins_CreatedByAdmin">
+          <End Role="Admins" Type="Self.Admins" Multiplicity="0..1" />
+          <End Role="Admins1" Type="Self.Admins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Admins1">
+              <PropertyRef Name="CreatedByAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUsers_Admins_BlockedBy">
+          <End Role="Admins" Type="Self.Admins" Multiplicity="1" />
+          <End Role="BlockedUsers" Type="Self.BlockedUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlockedUsers">
+              <PropertyRef Name="BlockedByAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUsers_Admins_UnblockedBy">
+          <End Role="Admins" Type="Self.Admins" Multiplicity="0..1" />
+          <End Role="BlockedUsers" Type="Self.BlockedUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlockedUsers">
+              <PropertyRef Name="UnblockedByAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUsers_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="BlockedUsers" Type="Self.BlockedUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlockedUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUsers_Workers">
+          <End Role="Workers" Type="Self.Workers" Multiplicity="0..1" />
+          <End Role="BlockedUsers" Type="Self.BlockedUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlockedUsers">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerComplaints_Admins">
+          <End Role="Admins" Type="Self.Admins" Multiplicity="0..1" />
+          <End Role="WorkerComplaints" Type="Self.WorkerComplaints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerComplaints">
+              <PropertyRef Name="ReviewedByAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerComplaints_Complaints">
+          <End Role="Complaints" Type="Self.Complaints" Multiplicity="1" />
+          <End Role="WorkerComplaints" Type="Self.WorkerComplaints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Complaints">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerComplaints">
+              <PropertyRef Name="ComplaintId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerComplaints_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="WorkerComplaints" Type="Self.WorkerComplaints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerComplaints">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerComplaints_Workers">
+          <End Role="Workers" Type="Self.Workers" Multiplicity="1" />
+          <End Role="WorkerComplaints" Type="Self.WorkerComplaints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerComplaints">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerGameAssignments_Admins">
+          <End Role="Admins" Type="Self.Admins" Multiplicity="1" />
+          <End Role="WorkerGameAssignments" Type="Self.WorkerGameAssignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerGameAssignments">
+              <PropertyRef Name="AssignedByAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerGameAssignments_BoardGames">
+          <End Role="BoardGames" Type="Self.BoardGames" Multiplicity="1" />
+          <End Role="WorkerGameAssignments" Type="Self.WorkerGameAssignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BoardGames">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerGameAssignments">
+              <PropertyRef Name="GameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerGameAssignments_Workers">
+          <End Role="Workers" Type="Self.Workers" Multiplicity="1" />
+          <End Role="WorkerGameAssignments" Type="Self.WorkerGameAssignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerGameAssignments">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workers_CreatedByAdmin">
+          <End Role="Admins" Type="Self.Admins" Multiplicity="0..1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="CreatedByAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище MeepleHouseDB2ModelContainer">
+          <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlockedUsers" EntityType="Self.BlockedUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BoardGames" EntityType="Self.BoardGames" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Complaints" EntityType="Self.Complaints" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Registrations" EntityType="Self.Registrations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkerComplaints" EntityType="Self.WorkerComplaints" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkerGameAssignments" EntityType="Self.WorkerGameAssignments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workers" EntityType="Self.Workers" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Registrat__GameI__628FA481" Association="Self.FK__Registrat__GameI__628FA481">
             <End Role="BoardGames" EntitySet="BoardGames" />
             <End Role="Registrations" EntitySet="Registrations" />
@@ -82,9 +334,60 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Registrations" EntitySet="Registrations" />
           </AssociationSet>
+          <AssociationSet Name="FK_Admins_CreatedByAdmin" Association="Self.FK_Admins_CreatedByAdmin">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="Admins1" EntitySet="Admins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUsers_Admins_BlockedBy" Association="Self.FK_BlockedUsers_Admins_BlockedBy">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="BlockedUsers" EntitySet="BlockedUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUsers_Admins_UnblockedBy" Association="Self.FK_BlockedUsers_Admins_UnblockedBy">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="BlockedUsers" EntitySet="BlockedUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUsers_Users" Association="Self.FK_BlockedUsers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BlockedUsers" EntitySet="BlockedUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUsers_Workers" Association="Self.FK_BlockedUsers_Workers">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="BlockedUsers" EntitySet="BlockedUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerComplaints_Admins" Association="Self.FK_WorkerComplaints_Admins">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="WorkerComplaints" EntitySet="WorkerComplaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerComplaints_Complaints" Association="Self.FK_WorkerComplaints_Complaints">
+            <End Role="Complaints" EntitySet="Complaints" />
+            <End Role="WorkerComplaints" EntitySet="WorkerComplaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerComplaints_Users" Association="Self.FK_WorkerComplaints_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="WorkerComplaints" EntitySet="WorkerComplaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerComplaints_Workers" Association="Self.FK_WorkerComplaints_Workers">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="WorkerComplaints" EntitySet="WorkerComplaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerGameAssignments_Admins" Association="Self.FK_WorkerGameAssignments_Admins">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="WorkerGameAssignments" EntitySet="WorkerGameAssignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerGameAssignments_BoardGames" Association="Self.FK_WorkerGameAssignments_BoardGames">
+            <End Role="BoardGames" EntitySet="BoardGames" />
+            <End Role="WorkerGameAssignments" EntitySet="WorkerGameAssignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerGameAssignments_Workers" Association="Self.FK_WorkerGameAssignments_Workers">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="WorkerGameAssignments" EntitySet="WorkerGameAssignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workers_CreatedByAdmin" Association="Self.FK_Workers_CreatedByAdmin">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MeepleHouseDB2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -98,6 +401,7 @@
           <Property Name="MinPlayers" Type="Int32" />
           <Property Name="MaxPlayers" Type="Int32" />
           <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__GameI__628FA481" FromRole="BoardGames" ToRole="Registrations" />
+          <NavigationProperty Name="WorkerGameAssignments" Relationship="MeepleHouseDB2Model.FK_WorkerGameAssignments_BoardGames" FromRole="BoardGames" ToRole="WorkerGameAssignments" />
         </EntityType>
         <EntityType Name="Registrations">
           <Key>
@@ -131,6 +435,11 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__UserI__619B8048" FromRole="Users" ToRole="Registrations" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedAt" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="WorkerComplaints" Relationship="MeepleHouseDB2Model.FK_WorkerComplaints_Users" FromRole="Users" ToRole="WorkerComplaints" />
+          <Property Name="IsBlocked" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BlockedUsers" Relationship="MeepleHouseDB2Model.FK_BlockedUsers_Users" FromRole="Users" ToRole="BlockedUsers" />
         </EntityType>
         <Association Name="FK__Registrat__GameI__628FA481">
           <End Role="BoardGames" Type="Self.BoardGames" Multiplicity="1" />
@@ -169,7 +478,331 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Registrations" EntitySet="Registrations" />
           </AssociationSet>
+          <EntitySet Name="Admins" EntityType="MeepleHouseDB2Model.Admins" />
+          <EntitySet Name="Complaints" EntityType="MeepleHouseDB2Model.Complaints" />
+          <EntitySet Name="Image" EntityType="MeepleHouseDB2Model.Image" />
+          <EntitySet Name="WorkerComplaints" EntityType="MeepleHouseDB2Model.WorkerComplaints" />
+          <EntitySet Name="Workers" EntityType="MeepleHouseDB2Model.Workers" />
+          <AssociationSet Name="FK_Admins_CreatedByAdmin" Association="MeepleHouseDB2Model.FK_Admins_CreatedByAdmin">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="Admins1" EntitySet="Admins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerComplaints_Admins" Association="MeepleHouseDB2Model.FK_WorkerComplaints_Admins">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="WorkerComplaints" EntitySet="WorkerComplaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workers_CreatedByAdmin" Association="MeepleHouseDB2Model.FK_Workers_CreatedByAdmin">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerComplaints_Complaints" Association="MeepleHouseDB2Model.FK_WorkerComplaints_Complaints">
+            <End Role="Complaints" EntitySet="Complaints" />
+            <End Role="WorkerComplaints" EntitySet="WorkerComplaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerComplaints_Users" Association="MeepleHouseDB2Model.FK_WorkerComplaints_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="WorkerComplaints" EntitySet="WorkerComplaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerComplaints_Workers" Association="MeepleHouseDB2Model.FK_WorkerComplaints_Workers">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="WorkerComplaints" EntitySet="WorkerComplaints" />
+          </AssociationSet>
+          <EntitySet Name="WorkerGameAssignments" EntityType="MeepleHouseDB2Model.WorkerGameAssignments" />
+          <AssociationSet Name="FK_WorkerGameAssignments_Admins" Association="MeepleHouseDB2Model.FK_WorkerGameAssignments_Admins">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="WorkerGameAssignments" EntitySet="WorkerGameAssignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerGameAssignments_BoardGames" Association="MeepleHouseDB2Model.FK_WorkerGameAssignments_BoardGames">
+            <End Role="BoardGames" EntitySet="BoardGames" />
+            <End Role="WorkerGameAssignments" EntitySet="WorkerGameAssignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkerGameAssignments_Workers" Association="MeepleHouseDB2Model.FK_WorkerGameAssignments_Workers">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="WorkerGameAssignments" EntitySet="WorkerGameAssignments" />
+          </AssociationSet>
+          <EntitySet Name="BlockedUsers" EntityType="MeepleHouseDB2Model.BlockedUsers" />
+          <AssociationSet Name="FK_BlockedUsers_Admins_BlockedBy" Association="MeepleHouseDB2Model.FK_BlockedUsers_Admins_BlockedBy">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="BlockedUsers" EntitySet="BlockedUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUsers_Admins_UnblockedBy" Association="MeepleHouseDB2Model.FK_BlockedUsers_Admins_UnblockedBy">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="BlockedUsers" EntitySet="BlockedUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUsers_Users" Association="MeepleHouseDB2Model.FK_BlockedUsers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BlockedUsers" EntitySet="BlockedUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUsers_Workers" Association="MeepleHouseDB2Model.FK_BlockedUsers_Workers">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="BlockedUsers" EntitySet="BlockedUsers" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedByAdminId" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedAt" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Admins1" Relationship="MeepleHouseDB2Model.FK_Admins_CreatedByAdmin" FromRole="Admins" ToRole="Admins1" />
+          <NavigationProperty Name="Admins2" Relationship="MeepleHouseDB2Model.FK_Admins_CreatedByAdmin" FromRole="Admins1" ToRole="Admins" />
+          <NavigationProperty Name="WorkerComplaints" Relationship="MeepleHouseDB2Model.FK_WorkerComplaints_Admins" FromRole="Admins" ToRole="WorkerComplaints" />
+          <NavigationProperty Name="Workers" Relationship="MeepleHouseDB2Model.FK_Workers_CreatedByAdmin" FromRole="Admins" ToRole="Workers" />
+          <NavigationProperty Name="WorkerGameAssignments" Relationship="MeepleHouseDB2Model.FK_WorkerGameAssignments_Admins" FromRole="Admins" ToRole="WorkerGameAssignments" />
+          <NavigationProperty Name="BlockedUsers" Relationship="MeepleHouseDB2Model.FK_BlockedUsers_Admins_BlockedBy" FromRole="Admins" ToRole="BlockedUsers" />
+          <NavigationProperty Name="BlockedUsers1" Relationship="MeepleHouseDB2Model.FK_BlockedUsers_Admins_UnblockedBy" FromRole="Admins" ToRole="BlockedUsers" />
+        </EntityType>
+        <EntityType Name="Complaints">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WorkerComplaints" Relationship="MeepleHouseDB2Model.FK_WorkerComplaints_Complaints" FromRole="Complaints" ToRole="WorkerComplaints" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="image1" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="WorkerComplaints">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkerId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ComplaintId" Type="Int32" Nullable="false" />
+          <Property Name="ComplaintText" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ComplaintDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IsReviewed" Type="Boolean" Nullable="false" />
+          <Property Name="ReviewedAt" Type="DateTime" Precision="7" />
+          <Property Name="ReviewedByAdminId" Type="Int32" />
+          <NavigationProperty Name="Admins" Relationship="MeepleHouseDB2Model.FK_WorkerComplaints_Admins" FromRole="WorkerComplaints" ToRole="Admins" />
+          <NavigationProperty Name="Complaints" Relationship="MeepleHouseDB2Model.FK_WorkerComplaints_Complaints" FromRole="WorkerComplaints" ToRole="Complaints" />
+          <NavigationProperty Name="Users" Relationship="MeepleHouseDB2Model.FK_WorkerComplaints_Users" FromRole="WorkerComplaints" ToRole="Users" />
+          <NavigationProperty Name="Workers" Relationship="MeepleHouseDB2Model.FK_WorkerComplaints_Workers" FromRole="WorkerComplaints" ToRole="Workers" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedByAdminId" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedAt" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Admins" Relationship="MeepleHouseDB2Model.FK_Workers_CreatedByAdmin" FromRole="Workers" ToRole="Admins" />
+          <NavigationProperty Name="WorkerComplaints" Relationship="MeepleHouseDB2Model.FK_WorkerComplaints_Workers" FromRole="Workers" ToRole="WorkerComplaints" />
+          <NavigationProperty Name="WorkerGameAssignments" Relationship="MeepleHouseDB2Model.FK_WorkerGameAssignments_Workers" FromRole="Workers" ToRole="WorkerGameAssignments" />
+          <NavigationProperty Name="BlockedUsers" Relationship="MeepleHouseDB2Model.FK_BlockedUsers_Workers" FromRole="Workers" ToRole="BlockedUsers" />
+        </EntityType>
+        <Association Name="FK_Admins_CreatedByAdmin">
+          <End Type="MeepleHouseDB2Model.Admins" Role="Admins" Multiplicity="0..1" />
+          <End Type="MeepleHouseDB2Model.Admins" Role="Admins1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Admins1">
+              <PropertyRef Name="CreatedByAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerComplaints_Admins">
+          <End Type="MeepleHouseDB2Model.Admins" Role="Admins" Multiplicity="0..1" />
+          <End Type="MeepleHouseDB2Model.WorkerComplaints" Role="WorkerComplaints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerComplaints">
+              <PropertyRef Name="ReviewedByAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workers_CreatedByAdmin">
+          <End Type="MeepleHouseDB2Model.Admins" Role="Admins" Multiplicity="0..1" />
+          <End Type="MeepleHouseDB2Model.Workers" Role="Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="CreatedByAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerComplaints_Complaints">
+          <End Type="MeepleHouseDB2Model.Complaints" Role="Complaints" Multiplicity="1" />
+          <End Type="MeepleHouseDB2Model.WorkerComplaints" Role="WorkerComplaints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Complaints">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerComplaints">
+              <PropertyRef Name="ComplaintId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerComplaints_Users">
+          <End Type="MeepleHouseDB2Model.Users" Role="Users" Multiplicity="1" />
+          <End Type="MeepleHouseDB2Model.WorkerComplaints" Role="WorkerComplaints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerComplaints">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerComplaints_Workers">
+          <End Type="MeepleHouseDB2Model.Workers" Role="Workers" Multiplicity="1" />
+          <End Type="MeepleHouseDB2Model.WorkerComplaints" Role="WorkerComplaints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerComplaints">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WorkerGameAssignments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkerId" Type="Int32" Nullable="false" />
+          <Property Name="GameId" Type="Int32" Nullable="false" />
+          <Property Name="AssignedByAdminId" Type="Int32" Nullable="false" />
+          <Property Name="AssignedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="RemovedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Admins" Relationship="MeepleHouseDB2Model.FK_WorkerGameAssignments_Admins" FromRole="WorkerGameAssignments" ToRole="Admins" />
+          <NavigationProperty Name="BoardGames" Relationship="MeepleHouseDB2Model.FK_WorkerGameAssignments_BoardGames" FromRole="WorkerGameAssignments" ToRole="BoardGames" />
+          <NavigationProperty Name="Workers" Relationship="MeepleHouseDB2Model.FK_WorkerGameAssignments_Workers" FromRole="WorkerGameAssignments" ToRole="Workers" />
+        </EntityType>
+        <Association Name="FK_WorkerGameAssignments_Admins">
+          <End Type="MeepleHouseDB2Model.Admins" Role="Admins" Multiplicity="1" />
+          <End Type="MeepleHouseDB2Model.WorkerGameAssignments" Role="WorkerGameAssignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerGameAssignments">
+              <PropertyRef Name="AssignedByAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerGameAssignments_BoardGames">
+          <End Type="MeepleHouseDB2Model.BoardGames" Role="BoardGames" Multiplicity="1" />
+          <End Type="MeepleHouseDB2Model.WorkerGameAssignments" Role="WorkerGameAssignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BoardGames">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerGameAssignments">
+              <PropertyRef Name="GameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkerGameAssignments_Workers">
+          <End Type="MeepleHouseDB2Model.Workers" Role="Workers" Multiplicity="1" />
+          <End Type="MeepleHouseDB2Model.WorkerGameAssignments" Role="WorkerGameAssignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkerGameAssignments">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BlockedUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="WorkerId" Type="Int32" />
+          <Property Name="ComplaintTitle" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ComplaintText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BlockedByAdminId" Type="Int32" Nullable="false" />
+          <Property Name="BlockedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="UnblockedByAdminId" Type="Int32" />
+          <Property Name="UnblockedAt" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Admins" Relationship="MeepleHouseDB2Model.FK_BlockedUsers_Admins_BlockedBy" FromRole="BlockedUsers" ToRole="Admins" />
+          <NavigationProperty Name="Admins1" Relationship="MeepleHouseDB2Model.FK_BlockedUsers_Admins_UnblockedBy" FromRole="BlockedUsers" ToRole="Admins" />
+          <NavigationProperty Name="Users" Relationship="MeepleHouseDB2Model.FK_BlockedUsers_Users" FromRole="BlockedUsers" ToRole="Users" />
+          <NavigationProperty Name="Workers" Relationship="MeepleHouseDB2Model.FK_BlockedUsers_Workers" FromRole="BlockedUsers" ToRole="Workers" />
+        </EntityType>
+        <Association Name="FK_BlockedUsers_Admins_BlockedBy">
+          <End Type="MeepleHouseDB2Model.Admins" Role="Admins" Multiplicity="1" />
+          <End Type="MeepleHouseDB2Model.BlockedUsers" Role="BlockedUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlockedUsers">
+              <PropertyRef Name="BlockedByAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUsers_Admins_UnblockedBy">
+          <End Type="MeepleHouseDB2Model.Admins" Role="Admins" Multiplicity="0..1" />
+          <End Type="MeepleHouseDB2Model.BlockedUsers" Role="BlockedUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlockedUsers">
+              <PropertyRef Name="UnblockedByAdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUsers_Users">
+          <End Type="MeepleHouseDB2Model.Users" Role="Users" Multiplicity="1" />
+          <End Type="MeepleHouseDB2Model.BlockedUsers" Role="BlockedUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlockedUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUsers_Workers">
+          <End Type="MeepleHouseDB2Model.Workers" Role="Workers" Multiplicity="0..1" />
+          <End Type="MeepleHouseDB2Model.BlockedUsers" Role="BlockedUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BlockedUsers">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -211,12 +844,108 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="MeepleHouseDB2Model.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IsBlocked" ColumnName="IsBlocked" />
+                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="MeepleHouseDB2Model.Admins">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedByAdminId" ColumnName="CreatedByAdminId" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Complaints">
+            <EntityTypeMapping TypeName="MeepleHouseDB2Model.Complaints">
+              <MappingFragment StoreEntitySet="Complaints">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Image">
+            <EntityTypeMapping TypeName="MeepleHouseDB2Model.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="image1" ColumnName="image" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkerComplaints">
+            <EntityTypeMapping TypeName="MeepleHouseDB2Model.WorkerComplaints">
+              <MappingFragment StoreEntitySet="WorkerComplaints">
+                <ScalarProperty Name="ReviewedByAdminId" ColumnName="ReviewedByAdminId" />
+                <ScalarProperty Name="ReviewedAt" ColumnName="ReviewedAt" />
+                <ScalarProperty Name="IsReviewed" ColumnName="IsReviewed" />
+                <ScalarProperty Name="ComplaintDate" ColumnName="ComplaintDate" />
+                <ScalarProperty Name="ComplaintText" ColumnName="ComplaintText" />
+                <ScalarProperty Name="ComplaintId" ColumnName="ComplaintId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="WorkerId" ColumnName="WorkerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workers">
+            <EntityTypeMapping TypeName="MeepleHouseDB2Model.Workers">
+              <MappingFragment StoreEntitySet="Workers">
+                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedByAdminId" ColumnName="CreatedByAdminId" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkerGameAssignments">
+            <EntityTypeMapping TypeName="MeepleHouseDB2Model.WorkerGameAssignments">
+              <MappingFragment StoreEntitySet="WorkerGameAssignments">
+                <ScalarProperty Name="RemovedDate" ColumnName="RemovedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AssignedDate" ColumnName="AssignedDate" />
+                <ScalarProperty Name="AssignedByAdminId" ColumnName="AssignedByAdminId" />
+                <ScalarProperty Name="GameId" ColumnName="GameId" />
+                <ScalarProperty Name="WorkerId" ColumnName="WorkerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlockedUsers">
+            <EntityTypeMapping TypeName="MeepleHouseDB2Model.BlockedUsers">
+              <MappingFragment StoreEntitySet="BlockedUsers">
+                <ScalarProperty Name="UnblockedAt" ColumnName="UnblockedAt" />
+                <ScalarProperty Name="UnblockedByAdminId" ColumnName="UnblockedByAdminId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BlockedAt" ColumnName="BlockedAt" />
+                <ScalarProperty Name="BlockedByAdminId" ColumnName="BlockedByAdminId" />
+                <ScalarProperty Name="ComplaintText" ColumnName="ComplaintText" />
+                <ScalarProperty Name="ComplaintTitle" ColumnName="ComplaintTitle" />
+                <ScalarProperty Name="WorkerId" ColumnName="WorkerId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,0 +1,584 @@
+﻿<Window x:Class="MeepleHouse.WorkerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Meeple House"
+        Height="796"
+        Width="1180"
+        WindowStartupLocation="CenterScreen"
+        Background="#F7F9F8"
+        FontFamily="Segoe UI">
+
+    <Window.Resources>
+
+        <Style x:Key="ProfileButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="170"/>
+            <Setter Property="Height" Value="54"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#1B6B32"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="27">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="20"
+                                                  ShadowDepth="4"
+                                                  Opacity="0.25"/>
+                            </Border.Effect>
+
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="👤"
+                                           FontSize="20"
+                                           Margin="0 0 10 0"/>
+                                <ContentPresenter VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="WorkerTabItemStyle" TargetType="TabItem">
+            <Setter Property="Foreground" Value="#1B6B32"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0 0 0 12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="TabBorder"
+                                Width="220"
+                                Height="58"
+                                Background="#F1F8F3"
+                                CornerRadius="16"
+                                Padding="18 0"
+                                HorizontalAlignment="Stretch">
+
+                            <ContentPresenter ContentSource="Header"
+                                              HorizontalAlignment="Left"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#1B6B32"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#E5F3E8"/>
+                            </Trigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="TabBorder" Property="Background" Value="#1B6B32"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GameCardStyle" TargetType="Button">
+            <Setter Property="Width" Value="205"/>
+            <Setter Property="Height" Value="205"/>
+            <Setter Property="Margin" Value="14"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="14"
+                                                  ShadowDepth="3"
+                                                  Opacity="0.18"/>
+                            </Border.Effect>
+                            <ContentPresenter/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="1.03" ScaleY="1.03"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="MinWidth" Value="150"/>
+            <Setter Property="Padding" Value="18 0"/>
+            <Setter Property="Background" Value="#1B6B32"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="8 0 0 0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="21">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="WorkerDataGridStyle" TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E2E8E5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="RowHeight" Value="38"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#EDF2EF"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+        </Style>
+
+        <Style x:Key="ModernComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10 0"/>
+            <Setter Property="Background" Value="#F8FAFB"/>
+            <Setter Property="BorderBrush" Value="#D7DEE3"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Background" Value="#F8FAFB"/>
+            <Setter Property="BorderBrush" Value="#D7DEE3"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="260"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ШАПКА -->
+        <Grid Grid.Row="0">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#0E3B22" Offset="0"/>
+                    <GradientStop Color="#0F6B2C" Offset="0.55"/>
+                    <GradientStop Color="#167A35" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <TextBlock Text="🎲  🎴  ♟  🎯  🧩  🎲"
+                       FontSize="54"
+                       Opacity="0.08"
+                       Foreground="White"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Margin="0 25 60 0"/>
+
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Margin="70 0 0 15">
+
+                <Border Width="110"
+                        Height="110"
+                        CornerRadius="28"
+                        BorderBrush="White"
+                        BorderThickness="5"
+                        Margin="0 0 35 0">
+
+                    <TextBlock Text="♟"
+                               FontSize="62"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </Border>
+
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Meeple House"
+                               FontSize="48"
+                               FontWeight="Bold"
+                               Foreground="White"/>
+
+                    <TextBlock Text="Панель сотрудника"
+                               FontSize="22"
+                               Foreground="#B9DEB5"
+                               Margin="4 5 0 0"/>
+
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0 14 0 0">
+
+                        <Rectangle Width="120"
+                                   Height="2"
+                                   Fill="#7FCB7A"
+                                   Margin="0 12 22 0"/>
+
+                        <TextBlock Text="🎲"
+                                   FontSize="24"
+                                   Foreground="#8DD681"/>
+
+                        <Rectangle Width="120"
+                                   Height="2"
+                                   Fill="#7FCB7A"
+                                   Margin="22 12 0 0"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <Button Content="Профиль"
+                    Style="{StaticResource ProfileButtonStyle}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0 0 70 10"
+                    Click="Profile_Click"/>
+        </Grid>
+
+        <!-- ПАНЕЛЬ СОТРУДНИКА -->
+        <Border Grid.Row="1"
+                Background="White"
+                CornerRadius="22"
+                Margin="35 28 35 30"
+                Padding="26">
+
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="18"
+                                  ShadowDepth="3"
+                                  Opacity="0.14"/>
+            </Border.Effect>
+
+            <TabControl TabStripPlacement="Left"
+                        BorderThickness="0"
+                        Background="Transparent">
+
+                <!-- МОИ ИГРЫ -->
+                <TabItem Header="Мои игры"
+                         Style="{StaticResource WorkerTabItemStyle}" Margin="0,0,0,-4">
+
+                    <Grid Margin="28 0 0 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0"
+                                BorderBrush="#E2E8E5"
+                                BorderThickness="0 0 0 1"
+                                Margin="0 0 0 18">
+
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Мои игры"
+                                           FontSize="24"
+                                           FontWeight="Bold"
+                                           Foreground="#263238"/>
+
+                                <TextBlock Text="Игры, на которые назначен сотрудник"
+                                           FontSize="14"
+                                           Foreground="#607D8B"
+                                           Margin="0 4 0 0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Grid Grid.Row="1">
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsControl x:Name="AssignedGamesList">
+
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button Style="{StaticResource GameCardStyle}"
+                                                    Tag="{Binding Id}"
+                                                    Click="AssignedGame_Click">
+
+                                                <StackPanel>
+                                                    <Border Height="130"
+                                                            CornerRadius="10 10 0 0"
+                                                            ClipToBounds="True">
+
+                                                        <Image Source="{Binding ImagePath}"
+                                                               Stretch="UniformToFill"/>
+                                                    </Border>
+
+                                                    <Grid Margin="12 10 12 0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition/>
+                                                            <ColumnDefinition Width="34"/>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <StackPanel>
+                                                            <TextBlock Text="{Binding Title}"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#263238"/>
+
+                                                            <TextBlock Text="{Binding Genre}"
+                                                                       FontSize="12"
+                                                                       Foreground="#607D8B"
+                                                                       Margin="0 4 0 0"/>
+                                                        </StackPanel>
+
+                                                        <Border Grid.Column="1"
+                                                                Width="30"
+                                                                Height="30"
+                                                                CornerRadius="15"
+                                                                Background="#E5F3E8">
+
+                                                            <TextBlock Text="›"
+                                                                       FontSize="28"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#1B6B32"
+                                                                       HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"
+                                                                       Margin="0 -5 0 0"/>
+                                                        </Border>
+                                                    </Grid>
+                                                </StackPanel>
+                                            </Button>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+
+                            <TextBlock x:Name="EmptyGamesText"
+                                       Text="Пока администратор не назначил вас ни на одну игру"
+                                       FontSize="16"
+                                       Foreground="#607D8B"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Visibility="Collapsed"/>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+
+                <!-- УЧАСТНИКИ -->
+                <TabItem Header="Участники"
+                         Style="{StaticResource WorkerTabItemStyle}" Margin="0,14,0,-28">
+
+                    <Grid Margin="28 0 0 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"/>
+                            <RowDefinition Height="62"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0"
+                                BorderBrush="#E2E8E5"
+                                BorderThickness="0 0 0 1"
+                                Margin="0 0 0 18">
+
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Участники"
+                                           FontSize="24"
+                                           FontWeight="Bold"
+                                           Foreground="#263238"/>
+
+                                <TextBlock Text="Список пользователей, записанных на назначенную игру"
+                                           FontSize="14"
+                                           Foreground="#607D8B"
+                                           Margin="0 4 0 0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <StackPanel Grid.Row="1"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+
+                            <TextBlock Text="Игра:"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       Foreground="#607D8B"
+                                       VerticalAlignment="Center"
+                                       Margin="0 0 12 0"/>
+
+                            <ComboBox x:Name="ParticipantsGameComboBox"
+                                      Width="300"
+                                      Style="{StaticResource ModernComboBoxStyle}"
+                                      DisplayMemberPath="Title"
+                                      SelectedValuePath="Id"
+                                      SelectionChanged="ParticipantsGameComboBox_SelectionChanged"/>
+
+                            <Button Content="Обновить"
+                                    Style="{StaticResource ActionButtonStyle}"
+                                    Click="RefreshParticipants_Click"/>
+                        </StackPanel>
+
+                        <DataGrid x:Name="ParticipantsGrid"
+                                  Grid.Row="2"
+                                  Style="{StaticResource WorkerDataGridStyle}">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="60"/>
+                                <DataGridTextColumn Header="Логин" Binding="{Binding Username}" Width="150"/>
+                                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="220"/>
+                                <DataGridTextColumn Header="Почта" Binding="{Binding Email}" Width="240"/>
+                                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="170"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+
+                <!-- ЖАЛОБЫ -->
+                <TabItem Header="Жалобы"
+         Style="{StaticResource WorkerTabItemStyle}" Margin="0,33,0,-36">
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+
+                        <Grid Margin="28 0 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="70"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0"
+                    BorderBrush="#E2E8E5"
+                    BorderThickness="0 0 0 1"
+                    Margin="0 0 0 18">
+
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="Жалобы"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="#263238"/>
+
+                                    <TextBlock Text="Подача жалобы на участника администратору"
+                               FontSize="14"
+                               Foreground="#607D8B"
+                               Margin="0 4 0 0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Grid Grid.Row="1" Margin="0 0 0 20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="420"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+
+                                    <TextBlock Text="Игра"
+                               FontSize="14"
+                               Foreground="#607D8B"
+                               Margin="4 0 0 7"/>
+
+                                    <ComboBox x:Name="ComplaintGameComboBox"
+                              Style="{StaticResource ModernComboBoxStyle}"
+                              DisplayMemberPath="Title"
+                              SelectedValuePath="Id"
+                              SelectionChanged="ComplaintGameComboBox_SelectionChanged"
+                              Margin="0 0 0 18"/>
+
+                                    <TextBlock Text="Участник"
+                               FontSize="14"
+                               Foreground="#607D8B"
+                               Margin="4 0 0 7"/>
+
+                                    <ComboBox x:Name="ComplaintUserComboBox"
+                              Style="{StaticResource ModernComboBoxStyle}"
+                              DisplayMemberPath="FullName"
+                              SelectedValuePath="Id"
+                              Margin="0 0 0 18"/>
+
+                                    <TextBlock Text="Тип жалобы"
+                               FontSize="14"
+                               Foreground="#607D8B"
+                               Margin="4 0 0 7"/>
+
+                                    <ComboBox x:Name="ComplaintTypeComboBox"
+                              Style="{StaticResource ModernComboBoxStyle}"
+                              DisplayMemberPath="Title"
+                              SelectedValuePath="Id"
+                              Margin="0 0 0 18"/>
+
+                                    <TextBlock Text="Описание ситуации"
+                               FontSize="14"
+                               Foreground="#607D8B"
+                               Margin="4 0 0 7"/>
+
+                                    <TextBox x:Name="ComplaintTextBox"
+                             Height="125"
+                             Style="{StaticResource ModernTextBoxStyle}"
+                             AcceptsReturn="True"
+                             Margin="0 0 0 22"/>
+
+                                    <Button Content="Отправить жалобу"
+                            Style="{StaticResource ActionButtonStyle}"
+                            HorizontalAlignment="Left"
+                            Click="SendComplaint_Click"/>
+                                </StackPanel>
+
+                                <Border Grid.Column="1"
+                        Background="#F1F8F3"
+                        CornerRadius="18"
+                        Padding="26"
+                        Margin="35 0 0 0"
+                        VerticalAlignment="Top">
+
+                                    <StackPanel>
+                                        <TextBlock Text="Информация"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="#263238"
+                                   Margin="0 0 0 12"/>
+
+                                        <TextBlock Text="Работник может подать жалобу только на участника той игры, на которую он назначен администратором. Жалоба будет сохранена в системе и доступна администратору для просмотра."
+                                   FontSize="15"
+                                   Foreground="#455A64"
+                                   TextWrapping="Wrap"
+                                   LineHeight="23"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </ScrollViewer>
+                </TabItem>
+
+            </TabControl>
+        </Border>
+    </Grid>
+</Window>
